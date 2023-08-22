@@ -32,12 +32,12 @@ public class RatingController {
     @GetMapping
     public List<RatingDto> getAll() {
         LOGGER.info("GET /ratings");
-        return tourRatingService.lookupAll().stream().map(tr -> assembler.toModel(tr)).collect(Collectors.toList());
+        return tourRatingService.lookupAll().stream().map(assembler::toModel).collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
     public RatingDto getRating(@PathVariable("id") Integer id) {
-        LOGGER.info("GET /ratings/{id}", id);
+        LOGGER.info("GET /ratings/{}", id);
         return assembler.toModel(tourRatingService.lookupRatingById(id)
                 .orElseThrow(() -> new NoSuchElementException("Rating " + id + " not found"))
         );

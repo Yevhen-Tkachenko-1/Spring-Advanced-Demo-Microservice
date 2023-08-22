@@ -39,14 +39,15 @@ public class TourRatingController {
     @ResponseStatus(HttpStatus.CREATED)
     public void createManyTourRatings(@PathVariable(value = "tourId") int tourId,
                                       @PathVariable(value = "score") int score,
-                                      @RequestParam("customers") Integer customers[]) {
+                                      @RequestParam("customers") Integer[] customers) {
         LOGGER.info("POST /tours/{}/ratings/{}", tourId, score);
         tourRatingService.rateMany(tourId, score, customers);
     }
 
     @GetMapping
-    public PagedModel<RatingDto> getAllRatingsForTour(@PathVariable(value = "tourId") int tourId, Pageable pageable,
-                                                      PagedResourcesAssembler pagedAssembler) {
+    public PagedModel<RatingDto> getAllRatingsForTour(@PathVariable(value = "tourId") int tourId,
+                                                      Pageable pageable,
+                                                      PagedResourcesAssembler<TourRating> pagedAssembler) {
         LOGGER.info("GET /tours/{}/ratings", tourId);
         Page<TourRating> tourRatingPage = tourRatingService.lookupRatings(tourId, pageable);
         return pagedAssembler.toModel(tourRatingPage, assembler);
