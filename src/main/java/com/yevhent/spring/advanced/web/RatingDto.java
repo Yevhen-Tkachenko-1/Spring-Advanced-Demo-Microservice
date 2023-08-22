@@ -1,5 +1,6 @@
 package com.yevhent.spring.advanced.web;
 
+import org.springframework.hateoas.RepresentationModel;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -11,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RatingDto {
+public class RatingDto extends RepresentationModel<RatingDto> {
 
     @Min(0)
     @Max(5)
